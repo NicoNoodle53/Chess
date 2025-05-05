@@ -47,7 +47,13 @@ def board():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-    
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                mouse_x, mouse_y = event.pos
+                clicked_col = mouse_x // square_size
+                clicked_row = mouse_y // square_size
+
+                print(f"cliked on row: {clicked_row}, coulumn: {clicked_col}")
+
         #Draw the board
         for row in range(8):
             for col in range(8):
@@ -62,5 +68,6 @@ def board():
         pygame.display.flip()
 
     pygame.quit()
+
 
 board()
