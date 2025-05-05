@@ -16,8 +16,8 @@ def board():
     piece_images = {
         'p': pygame.image.load('Chess/assets/black_pawn.png'),
         'r': pygame.image.load('Chess/assets/black_pawn.png'),
-        'n': pygame.image.load('Chess/assets/black_pawn.png'),
-        'b': pygame.image.load('Chess/assets/black_pawn.png'),
+        'n': pygame.image.load('Chess/assets/black_knight.png'),
+        'b': pygame.image.load('Chess/assets/black_bishop.png'),
         'q': pygame.image.load('Chess/assets/black_pawn.png'),
         'k': pygame.image.load('Chess/assets/black_pawn.png'),
         'P': pygame.image.load('Chess/assets/black_pawn.png'),
