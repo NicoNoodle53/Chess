@@ -1,8 +1,12 @@
-def board():
-    import pygame
+import pygame
+#initialize pygame
+pygame.init()
 
-    #initialize pygame
-    pygame.init()
+
+def main():
+
+
+
 
     screen_width = 400
     screen_height = 480
@@ -61,6 +65,7 @@ def board():
 
                 print(f"cliked on row: {clicked_row}, coulumn: {clicked_col}")
 
+                piece =board[clicked_row][clicked_col] 
                 #check to see if we clicked on a piece
                 if selected_piece_pos is None:
                     piece = board[clicked_row][clicked_col]
@@ -77,7 +82,7 @@ def board():
                         board[start_row][start_col] = ' '
                         board[end_row][end_col] = piece_to_move
                         selected_piece_pos = None
-                        print(f"Moved{piece_to_move} from {(start_row, start_col)} to {(end_row, end_col)}")
+                        print(f"Moved {piece_to_move} from {(start_row, start_col)} to {(end_row, end_col)}")
                     else:
                         #clicked on the same square, deselect
                         selected_piece_pos = None
@@ -93,23 +98,63 @@ def board():
                     piece_image = pygame.transform.scale(piece_images[piece], (square_size, square_size))
                     screen.blit(piece_image, (col * square_size, row * square_size))
         #highlight the selected square
+        if selected_piece_pos == None:
+            selected_square = None
         if selected_square:
-            selected_row, selected_col = selected_square
-            highlight_color = (255,255,0)
-            highlight_thickness = 3
-            highlight_rect = pygame.Rect(
-                selected_col * square_size,
-                selected_row * square_size,
-                square_size,
-                square_size
-            )
-            pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
-            
-            
+            piece = board[clicked_row][clicked_col]
+            if piece != ' ':
+                selected_row, selected_col = selected_square
+                highlight_color = (255,255,0)
+                highlight_thickness = 3
+                highlight_rect = highlight_rect = get_highlight_rect(selected_row, selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+            if piece == 'p':
+                selected_row, selected_col = selected_square
+
+                highlight_rect = get_highlight_rect(selected_row, selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+                highlight_rect = get_highlight_rect(black_pawn_move(clicked_row), selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+                highlight_rect = get_highlight_rect(selected_row + 1, selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+            if piece == 'P':
+                selected_row, selected_col = selected_square
+
+                highlight_rect = get_highlight_rect(selected_row, selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+                highlight_rect = get_highlight_rect(white_pawn_move(clicked_row), selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
+                highlight_rect = get_highlight_rect(selected_row - 1, selected_col, square_size)
+                pygame.draw.rect(screen, highlight_color, highlight_rect, highlight_thickness)
+
 
         pygame.display.flip()
 
     pygame.quit()
 
+def black_pawn_move(row,):
+    if row == 1:
+        move = row + 2
+    else:
+        move = row + 1
+    return move
 
-board()
+def white_pawn_move(row):
+    if row == 6:
+        move = row - 2
+    else:
+        move = row - 1
+    return move
+
+def get_highlight_rect(row, col, size):
+    highlight_rect = pygame.Rect(col * size,row * size, size, size)
+    return highlight_rect
+        
+
+main()
